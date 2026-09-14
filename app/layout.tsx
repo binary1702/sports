@@ -19,11 +19,11 @@ const interTight = Inter_Tight({
 });
 
 export const metadata: Metadata = {
-  title: "2026 US Open - Binary 1702",
-  description: "An interactive visual story of Alexander Zverev's path to the 2026 US Open championship.",
+  title: "Sports - Binary 1702",
+  description: "Visual stories from the world of sports.",
   openGraph: {
-    title: "2026 US Open - Binary 1702",
-    description: "An interactive visual story of Alexander Zverev's path to the 2026 US Open championship.",
+    title: "Sports - Binary 1702",
+    description: "Visual stories from the world of sports.",
     type: "website",
   },
 };
