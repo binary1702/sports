@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 2026 US Open
 
-## Getting Started
+A scroll-based visual story of the 2026 US Open Men's Singles Final.
 
-First, run the development server:
+<p align="center">
+  <a href="https://www.usopen.org"><img src="public/logos/us-open.webp" alt="US Open" width="80" /></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://www.espn.com"><img src="public/logos/espn.webp" alt="ESPN" width="80" /></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://binary1702.com"><img src="public/logos/b1702.webp" alt="Binary 1702" width="80" /></a>
+</p>
+
+## What This Is
+
+An editorial web experience that tells the story of Alexander Zverev's victory over Ben Shelton in the 2026 US Open final. Built as a Binary 1702 experiment in data-driven storytelling.
+
+## Sections
+
+1. **Hero** - Champion reveal with embedded match footage
+2. **Arthur Ashe** - History of the stadium and its namesake
+3. **The Final** - Zverev vs Shelton head-to-head comparison
+4. **Road to the Title** - Match-by-match journey through the tournament
+5. **The Four Majors** - Context on Grand Slam tennis
+
+## Stack
+
+- Next.js 16
+- TypeScript
+- Tailwind CSS
+- GSAP
+
+## Data
+
+Match data sourced from ESPN's API, stored in `lib/data/espn-us-open-2026.json`.
+
+## Run Locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Credits
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Data**: [ESPN](https://www.espn.com)
+- **Tournament**: [US Open](https://www.usopen.org)
+- **Built by**: [Binary 1702](https://binary1702.com)
