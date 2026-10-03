@@ -136,7 +136,7 @@ export function Editorial01() {
                 Arthur Ashe Stadium is the centerpiece of the US Open and the largest tennis stadium in the world. It is the court where Ben Shelton faced off Alexander Zverev in the 2026 US Open singles finals, are played. The stadium is named after one of the most important figures in tennis history.
               </p>
 
-              <p>
+              <p className="text-sm md:text-lg lg:text-xl font-medium text-us-open-yellow">
                 Ashe won the inaugural US Open in 1968, becoming the first Black man to win the tournament&apos;s singles title.
               </p>
 

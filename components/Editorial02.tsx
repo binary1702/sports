@@ -238,23 +238,24 @@ export function Editorial02() {
         <footer className="mt-8 md:mt-0 md:pt-5">
           {/* Mobile: 2x2 grid of tournament cards */}
           <div className="md:hidden grid grid-cols-2 gap-2">
-            {[
-              { name: 'Australian Open', highlight: false },
-              { name: 'French Open', highlight: false },
-              { name: 'Wimbledon', highlight: false },
-              { name: 'US Open', highlight: true },
-            ].map((t, i) => (
-              <div
-                key={i}
-                className={`px-3 py-2 rounded border text-center text-xs font-medium ${
-                  t.highlight
-                    ? 'border-us-open-yellow/50 text-us-open-yellow bg-us-open-yellow/10'
-                    : 'border-zinc-700 text-foreground/60'
-                }`}
-              >
-                {t.name}
-              </div>
-            ))}
+            {tournaments.map((tournament) => {
+              const isSelected = selectedId === tournament.id;
+              const isHighlighted = tournament.highlight || isSelected;
+
+              return (
+                <button
+                  key={tournament.id}
+                  onClick={() => handleSelect(isSelected ? null : tournament.id)}
+                  className={`px-3 py-2 rounded border text-center text-xs font-medium transition-opacity ${
+                    isHighlighted
+                      ? 'border-us-open-yellow/50 text-us-open-yellow bg-us-open-yellow/10'
+                      : 'border-zinc-700 text-foreground/60'
+                  } ${selectedId && !isSelected ? 'opacity-40' : ''}`}
+                >
+                  {tournament.name}
+                </button>
+              );
+            })}
           </div>
 
           {/* Desktop: timeline */}

@@ -4,7 +4,22 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from '@/lib/gsap';
 
-export function Attribution() {
+export interface AttributionConfig {
+  video?: {
+    src: string;
+    startTime?: number;
+  };
+}
+
+const DEFAULT_CONFIG: AttributionConfig = {
+  video: {
+    src: '/binary-25s.mp4',
+    startTime: 7,
+  },
+};
+
+export function Attribution(props: AttributionConfig = {}) {
+  const config = { ...DEFAULT_CONFIG, ...props, video: { ...DEFAULT_CONFIG.video, ...props.video } };
   const glitchContainerRef = useRef<HTMLAnchorElement>(null);
   const glitchARef = useRef<HTMLSpanElement>(null);
   const glitchBRef = useRef<HTMLSpanElement>(null);
@@ -127,12 +142,12 @@ export function Attribution() {
           playsInline
           className="w-full h-full object-cover opacity-70"
           ref={(el) => {
-            if (el) {
-              el.currentTime = 7;
+            if (el && config.video?.startTime !== undefined) {
+              el.currentTime = config.video.startTime;
             }
           }}
         >
-          <source src="/binary-25s.mp4" type="video/mp4" />
+          <source src={config.video?.src || '/binary-25s.mp4'} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/60" />
       </div>
@@ -192,36 +207,33 @@ export function Attribution() {
         {/* Main statement - second biggest typography */}
         <div className="mb-12">
           <p className="text-3xl md:text-5xl lg:text-6xl font-light text-foreground leading-tight tracking-tight">
-            Complex information
-          </p>
-          <p className="text-3xl md:text-5xl lg:text-6xl font-light text-foreground leading-tight tracking-tight">
-            should <span className="feel-text">feel</span> simple.
+            Exploration should be <span className="feel-text">playful.</span>
           </p>
         </div>
 
         {/* Description */}
-        <p className="text-base md:text-lg text-muted max-w-lg mx-auto mb-16 font-light">
-          We build systems that make complexity easier to understand.
+        <p className="text-base md:text-lg text-muted whitespace-nowrap mx-auto mb-16 font-light">
+        Bringing curiosity to life through data, design, and interactive stories.
         </p>
 
         {/* CTAs - quiet signature */}
         <div className="flex items-center justify-center gap-4 text-sm">
-          <a
-            href="https://binary1702.com/lets-talk"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="uppercase tracking-widest text-foreground hover:text-accent transition-colors"
-          >
-            Contact
-          </a>
-          <span className="text-muted">·</span>
           <a
             href="https://binary1702.com"
             target="_blank"
             rel="noopener noreferrer"
             className="uppercase tracking-widest text-foreground hover:text-accent transition-colors"
           >
-            Binary1702.com
+            Explore
+          </a>
+          <span className="text-muted">·</span>
+          <a
+            href="https://binary1702.com/about"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="uppercase tracking-widest text-foreground hover:text-accent transition-colors"
+          >
+            About
           </a>
         </div>
       </div>

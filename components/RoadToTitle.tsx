@@ -67,8 +67,9 @@ const ROUND_LABELS: Record<Round, string> = {
   F: 'Final',
 };
 
-function getEspnMatchUrl(matchId: string): string {
-  return `https://www.espn.com/tennis/match/_/matchId/${matchId}`;
+function getEspnMatchUrl(): string {
+  // ESPN tennis doesn't have individual match pages - link to tournament scoreboard
+  return 'https://www.espn.com/tennis/scoreboard/tournament/_/year/2026/eventId/189-2026';
 }
 
 function formatMatchDate(dateStr: string): string {
@@ -103,7 +104,7 @@ function MatchCard({
   const sets = match.sets.map(s => formatSetScore(s, isPlayerPlayer1));
   const flag = FLAGS[opponent.country] || '🏳️';
   const isFinal = match.round === 'F';
-  const espnUrl = getEspnMatchUrl(match.id);
+  const espnUrl = getEspnMatchUrl();
   const matchDate = formatMatchDate(match.date);
 
   const SetScores = ({ large = false }: { large?: boolean }) => (

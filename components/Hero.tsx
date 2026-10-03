@@ -4,11 +4,75 @@ import { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { gsap, useGSAP } from '@/lib/gsap';
 
-const VIDEO_ID = '5xvs0FC_A-M';
-const START_TIME = 828; // 13:48
-const END_TIME = 930;   // 15:30
+interface AnimationFrom {
+  x?: number;
+  y?: number;
+  scale?: number;
+  opacity?: number;
+  letterSpacing?: string;
+  scaleX?: number;
+}
 
-export function Hero() {
+interface ElementAnimation {
+  delay?: number;
+  duration?: number;
+  ease?: string;
+  from?: AnimationFrom;
+  stagger?: number;
+}
+
+interface HeroAnimation {
+  corners?: ElementAnimation;
+  bgLines?: ElementAnimation;
+  accentLine?: ElementAnimation;
+  badge?: ElementAnimation;
+  title?: ElementAnimation;
+  subtitle?: ElementAnimation;
+  logos?: ElementAnimation;
+  credit?: ElementAnimation;
+}
+
+interface HeroProps {
+  video: {
+    id: string;
+    start?: number;
+    end?: number;
+  };
+  badge:
+    | { type: 'flag'; colors: string[] }
+    | { type: 'image'; src: string; alt?: string }
+    | { type: 'emoji'; emoji: string };
+  title: {
+    line1: string;
+    line2: string;
+    line1Weight?: 'light' | 'medium';
+    line2Weight?: 'light' | 'medium';
+  };
+  subtitle: string;
+  logos: Array<{
+    src: string;
+    alt: string;
+    href: string;
+    bgColor?: string;
+    padding?: string;
+    wide?: boolean;
+  }>;
+  animation?: HeroAnimation;
+}
+
+const defaultAnimation: HeroAnimation = {
+  corners: { delay: 0, duration: 1, ease: 'power3.out', from: { opacity: 0, scale: 0.5 }, stagger: 0.15 },
+  bgLines: { delay: 0.5, duration: 1.4, ease: 'power2.inOut', from: { scaleX: 0 } },
+  accentLine: { delay: 1.2, duration: 1, ease: 'power2.inOut', from: { scaleX: 0, opacity: 0 } },
+  badge: { delay: 3.8, duration: 0.7, ease: 'power4.out', from: { opacity: 0, y: -50, scale: 0.7 } },
+  title: { delay: 3, duration: 1.5, ease: 'power4.out', from: { opacity: 0, y: 80, scale: 0.85 } },
+  subtitle: { delay: 3.3, duration: 1, ease: 'power3.out', from: { opacity: 0, y: 30, letterSpacing: '0.6em' } },
+  logos: { delay: 1.8, duration: 0.8, ease: 'power3.out', from: { opacity: 0, y: 20 } },
+  credit: { delay: 2.2, duration: 0.6, ease: 'power3.out', from: { opacity: 0, x: 20 } },
+};
+
+export function Hero({ video, badge, title, subtitle, logos, animation }: HeroProps) {
+  const anim = { ...defaultAnimation, ...animation };
   const containerRef = useRef<HTMLElement>(null);
   const playerRef = useRef<YT.Player | null>(null);
   const iframeRef = useRef<HTMLDivElement>(null);
@@ -27,7 +91,7 @@ export function Hero() {
       if (!iframeRef.current) return;
 
       playerRef.current = new window.YT.Player(iframeRef.current, {
-        videoId: VIDEO_ID,
+        videoId: video.id,
         width: '100%',
         height: '100%',
         playerVars: {
@@ -38,27 +102,26 @@ export function Hero() {
           rel: 0,
           modestbranding: 1,
           playsinline: 1,
-          start: START_TIME,
+          start: video.start ?? 0,
           disablekb: 1,
           iv_load_policy: 3,
           fs: 0,
+          loop: 1,
+          playlist: video.id,
         },
         events: {
           onReady: (event: YT.PlayerEvent) => {
             event.target.playVideo();
           },
           onStateChange: (event: YT.OnStateChangeEvent) => {
-            // Hide overlay after a delay once video starts playing
-            // This gives time for YouTube branding to fade
+            // Hide overlay immediately once video starts playing
             if (event.data === window.YT.PlayerState.PLAYING) {
-              setTimeout(() => {
-                setIsPlaying(true);
-              }, 4000); // 4 second delay to let YouTube branding fade
+              setIsPlaying(true);
 
               const checkTime = setInterval(() => {
                 const currentTime = playerRef.current?.getCurrentTime();
-                if (currentTime && currentTime >= END_TIME) {
-                  playerRef.current?.seekTo(START_TIME, true);
+                if (video.end && currentTime && currentTime >= video.end) {
+                  playerRef.current?.seekTo(video.start ?? 0, true);
                 }
               }, 500);
 
@@ -90,64 +153,87 @@ export function Hero() {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        // 4.5-second intro sequence - overlaps with video reveal at 4s
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-        // Phase 1: Corner accents draw in (0-1s)
-        tl.fromTo(
-          '.hero-corner',
-          { opacity: 0, scale: 0.5 },
-          { opacity: 1, scale: 1, duration: 1, stagger: 0.15 }
-        )
-        // Phase 2: Background lines sweep in (0.5-1.9s)
-        .fromTo(
-          '.hero-bg-line',
-          { scaleX: 0 },
-          { scaleX: 1, duration: 1.4, ease: 'power2.inOut' },
-          0.5
-        )
-        // Phase 3: Accent line expands from center (1.2-2.2s)
-        .fromTo(
-          '.hero-accent-line',
-          { scaleX: 0, opacity: 0 },
-          { scaleX: 1, opacity: 1, duration: 1, ease: 'power2.inOut' },
-          1.2
-        )
-        // Phase 4: Logos slide in (1.8-2.6s)
-        .fromTo(
-          '.hero-tagline',
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.8 },
-          1.8
-        )
-        // Phase 5: Credit fades in (2.2-2.8s)
-        .fromTo(
-          '.hero-credit',
-          { opacity: 0, x: 20 },
-          { opacity: 1, x: 0, duration: 0.6 },
-          2.2
-        )
-        // Phase 6: Name reveals - THE GRAND FINALE (3-4.5s) - VIDEO STARTS REVEALING AT 4s
-        .fromTo(
-          '.hero-name',
-          { opacity: 0, y: 80, scale: 0.85 },
-          { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: 'power4.out' },
-          3
-        )
-        // Phase 7: Champion label fades up with name (3.3-4.3s)
-        .fromTo(
-          '.hero-label',
-          { opacity: 0, y: 30, letterSpacing: '0.6em' },
-          { opacity: 1, y: 0, letterSpacing: '0.1em', duration: 1, ease: 'power3.out' },
-          3.3
-        )
-        // Phase 8: Flag drops in last (3.8-4.5s) - as video fully reveals
-        .fromTo(
-          '.hero-badge',
-          { opacity: 0, y: -50, scale: 0.7 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'power4.out' },
-          3.8
-        );
+        // Corners
+        if (anim.corners) {
+          tl.fromTo(
+            '.hero-corner',
+            { ...anim.corners.from },
+            { opacity: 1, scale: 1, y: 0, x: 0, duration: anim.corners.duration, stagger: anim.corners.stagger, ease: anim.corners.ease },
+            anim.corners.delay
+          );
+        }
+
+        // Background lines
+        if (anim.bgLines) {
+          tl.fromTo(
+            '.hero-bg-line',
+            { ...anim.bgLines.from },
+            { scaleX: 1, opacity: 1, duration: anim.bgLines.duration, ease: anim.bgLines.ease },
+            anim.bgLines.delay
+          );
+        }
+
+        // Accent line
+        if (anim.accentLine) {
+          tl.fromTo(
+            '.hero-accent-line',
+            { ...anim.accentLine.from },
+            { scaleX: 1, opacity: 1, duration: anim.accentLine.duration, ease: anim.accentLine.ease },
+            anim.accentLine.delay
+          );
+        }
+
+        // Logos
+        if (anim.logos) {
+          tl.fromTo(
+            '.hero-tagline',
+            { ...anim.logos.from },
+            { opacity: 1, y: 0, x: 0, duration: anim.logos.duration, ease: anim.logos.ease },
+            anim.logos.delay
+          );
+        }
+
+        // Credit
+        if (anim.credit) {
+          tl.fromTo(
+            '.hero-credit',
+            { ...anim.credit.from },
+            { opacity: 1, y: 0, x: 0, duration: anim.credit.duration, ease: anim.credit.ease },
+            anim.credit.delay
+          );
+        }
+
+        // Title
+        if (anim.title) {
+          tl.fromTo(
+            '.hero-name',
+            { ...anim.title.from },
+            { opacity: 1, x: 0, y: 0, scale: 1, duration: anim.title.duration, ease: anim.title.ease },
+            anim.title.delay
+          );
+        }
+
+        // Subtitle
+        if (anim.subtitle) {
+          tl.fromTo(
+            '.hero-label',
+            { ...anim.subtitle.from },
+            { opacity: 1, y: 0, letterSpacing: '0.1em', duration: anim.subtitle.duration, ease: anim.subtitle.ease },
+            anim.subtitle.delay
+          );
+        }
+
+        // Badge
+        if (anim.badge) {
+          tl.fromTo(
+            '.hero-badge',
+            { ...anim.badge.from },
+            { opacity: 1, y: 0, scale: 1, duration: anim.badge.duration, ease: anim.badge.ease },
+            anim.badge.delay
+          );
+        }
 
         return () => {
           tl.kill();
@@ -206,73 +292,62 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-[20] text-center px-6 max-w-5xl mx-auto">
-        {/* German flag */}
+        {/* Badge (flag, image, or emoji) */}
         <div className="hero-badge flex justify-center mb-6 opacity-0">
-          <span className="inline-flex flex-col w-16 h-10 rounded overflow-hidden border border-zinc-700">
-            <span className="flex-1 bg-black" />
-            <span className="flex-1 bg-red-600" />
-            <span className="flex-1 bg-yellow-400" />
-          </span>
+          {badge.type === 'flag' ? (
+            <span className="inline-flex flex-col w-16 h-10 rounded overflow-hidden border border-zinc-700">
+              {badge.colors.map((color, i) => (
+                <span key={i} className="flex-1" style={{ backgroundColor: color }} />
+              ))}
+            </span>
+          ) : badge.type === 'emoji' ? (
+            <span className="text-6xl">{badge.emoji}</span>
+          ) : (
+            <span className="inline-flex w-16 h-16 rounded-full overflow-hidden border border-zinc-700">
+              <Image
+                src={badge.src}
+                alt={badge.alt ?? ''}
+                width={64}
+                height={64}
+                className="w-full h-full object-cover"
+              />
+            </span>
+          )}
         </div>
 
-        {/* Champion name */}
+        {/* Title */}
         <h1 className="hero-name text-display text-foreground mb-4 opacity-0">
-          <span className="font-light">ALEXANDER</span>
+          <span className={`font-${title.line1Weight ?? 'light'}`}>{title.line1}</span>
           <br />
-          <span className="font-medium">ZVEREV</span>
+          <span className={`font-${title.line2Weight ?? 'medium'}`}>{title.line2}</span>
         </h1>
 
-        {/* Champion label */}
+        {/* Subtitle */}
         <div className="hero-label mb-8 opacity-0">
           <span className="text-xl md:text-2xl font-light text-foreground/80 tracking-wide">
-            2026 US OPEN CHAMPION
+            {subtitle}
           </span>
         </div>
 
         {/* Logos - centered below */}
         <div className="hero-tagline flex items-center justify-center gap-4 md:gap-5 opacity-0">
-          <a
-            href="https://www.usopen.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-zinc-700 overflow-hidden hover:border-zinc-500 transition-colors"
-          >
-            <Image
-              src="/logos/us-open.webp"
-              alt="US Open"
-              width={56}
-              height={56}
-              className="w-full h-full object-cover"
-            />
-          </a>
-          <a
-            href="https://www.espn.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-zinc-700 overflow-hidden bg-red-600 p-1.5 hover:border-zinc-500 transition-colors"
-          >
-            <Image
-              src="/logos/espn.webp"
-              alt="ESPN"
-              width={56}
-              height={56}
-              className="w-full h-full object-contain"
-            />
-          </a>
-          <a
-            href="https://binary1702.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-11 h-11 md:w-13 md:h-13 rounded-full border border-zinc-700 overflow-hidden hover:border-zinc-500 transition-colors"
-          >
-            <Image
-              src="/logos/b1702.webp"
-              alt="Binary 1702"
-              width={52}
-              height={52}
-              className="w-full h-full object-cover"
-            />
-          </a>
+          {logos.map((logo, i) => (
+            <a
+              key={i}
+              href={logo.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${logo.wide ? 'h-8 md:h-10 px-3' : 'w-12 h-12 md:w-14 md:h-14'} rounded-full border border-zinc-700 overflow-hidden hover:border-zinc-500 transition-colors flex items-center justify-center ${logo.bgColor ?? ''} ${logo.padding ?? ''}`}
+            >
+              <Image
+                src={logo.src}
+                alt={logo.alt}
+                width={logo.wide ? 80 : 56}
+                height={logo.wide ? 20 : 56}
+                className={logo.wide ? 'h-5 md:h-6 w-auto object-contain' : 'w-full h-full object-cover'}
+              />
+            </a>
+          ))}
         </div>
 
         {/* Accent line */}

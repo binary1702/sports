@@ -3,8 +3,13 @@ import Link from 'next/link';
 const stories = [
   {
     slug: 'us-open-2026',
-    title: '2026 US Open',
-    date: 'Sep 14, 2026',
+    title: 'The US Open',
+    date: 'September 14th',
+  },
+  {
+    slug: 'f1-sepang-2026',
+    title: 'F1 Sepang Grand Prix',
+    date: 'October 2nd',
   },
 ];
 
@@ -12,9 +17,9 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24">
       <header className="mb-12">
-        <h1 className="text-caption">Sports</h1>
+        <h1 className="text-display text-foreground">2026</h1>
       </header>
-      <nav>
+      <nav className="space-y-12">
         {stories.map((story) => (
           <Link
             key={story.slug}
