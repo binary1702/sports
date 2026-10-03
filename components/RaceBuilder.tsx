@@ -161,18 +161,18 @@ export function RaceBuilder() {
 
   return (
     <section className="snap-section reveal-section relative h-dvh border-t border-zinc-800 bg-black overflow-hidden">
-      {/* Background video */}
-      <div className="absolute inset-0 z-0">
+      {/* Background video - zoomed on mobile for vertical crop */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <iframe
           src="https://www.youtube.com/embed/9fWkhYaT-0c?autoplay=1&mute=1&loop=1&playlist=9fWkhYaT-0c&controls=0&showinfo=0&rel=0&modestbranding=1&start=0"
           allow="autoplay; encrypted-media"
-          className="absolute inset-0 w-full h-full pointer-events-none"
+          className="absolute pointer-events-none w-[450%] h-[250%] md:w-[120%] md:h-[120%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           style={{ border: 'none' }}
         />
         <div className="absolute inset-0 bg-black/85" />
       </div>
 
-      <div className="relative z-10 h-full flex flex-col px-6 py-6 md:px-10 md:py-8 lg:px-12 lg:py-10">
+      <div className="relative z-10 h-full flex flex-col px-4 py-6 md:px-10 md:py-8 lg:px-12 lg:py-10">
         <div className="mx-auto w-full max-w-3xl flex flex-col h-full">
 
           <div className="mb-4">
@@ -187,7 +187,7 @@ export function RaceBuilder() {
             </p>
           </div>
 
-          <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="flex-1 grid grid-cols-2 gap-4 lg:gap-6">
 
             {/* Position Slots */}
             <div className="flex flex-col h-full">

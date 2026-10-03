@@ -132,7 +132,7 @@ export function Attribution(props: AttributionConfig = {}) {
   };
 
   return (
-    <footer className="snap-section reveal-section relative flex flex-col items-center justify-center px-6 border-t border-zinc-800 overflow-hidden">
+    <footer className="snap-section reveal-section relative flex flex-col items-center justify-center px-4 md:px-6 border-t border-zinc-800 overflow-hidden overflow-y-auto">
       {/* Video backdrop */}
       <div className="absolute inset-0 z-0">
         <video
@@ -159,7 +159,7 @@ export function Attribution(props: AttributionConfig = {}) {
           href="https://binary1702.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="relative inline-flex items-center gap-4 hover:opacity-80 transition-opacity mb-12"
+          className="relative inline-flex items-center gap-3 md:gap-4 hover:opacity-80 transition-opacity mb-8 md:mb-12"
           onMouseEnter={triggerGlitch}
           onMouseLeave={triggerGlitchOut}
         >
@@ -205,14 +205,14 @@ export function Attribution(props: AttributionConfig = {}) {
         </a>
 
         {/* Main statement - second biggest typography */}
-        <div className="mb-12">
-          <p className="text-3xl md:text-5xl lg:text-6xl font-light text-foreground leading-tight tracking-tight">
+        <div className="mb-8 md:mb-12">
+          <p className="text-2xl md:text-4xl lg:text-5xl font-light text-foreground leading-tight tracking-tight">
             Exploration should be <span className="feel-text">playful.</span>
           </p>
         </div>
 
         {/* Description */}
-        <p className="text-base md:text-lg text-muted whitespace-nowrap mx-auto mb-16 font-light">
+        <p className="text-sm md:text-base lg:text-lg text-muted mx-auto mb-10 md:mb-16 font-light max-w-xs md:max-w-none">
         Bringing curiosity to life through data, design, and interactive stories.
         </p>
 

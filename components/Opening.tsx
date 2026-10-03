@@ -69,20 +69,20 @@ export function Opening({
       ref={containerRef}
       className="snap-section reveal-section relative h-dvh border-t border-zinc-800 bg-black overflow-hidden"
     >
-      {/* Background video */}
+      {/* Background video - zoomed on mobile for vertical crop */}
       {video && (
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <iframe
             src={`https://www.youtube.com/embed/${video.id}?autoplay=1&mute=1&loop=1&playlist=${video.id}&controls=0&showinfo=0&rel=0&modestbranding=1&start=${video.start || 0}`}
             allow="autoplay; encrypted-media"
-            className="absolute inset-0 w-full h-full pointer-events-none"
+            className="absolute pointer-events-none w-[450%] h-[250%] md:w-[120%] md:h-[120%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             style={{ border: 'none' }}
           />
           <div className="absolute inset-0 bg-black/70" />
         </div>
       )}
 
-      <div className="relative z-10 flex h-full flex-col justify-center px-6 py-8 md:px-12 md:py-12 lg:px-16 lg:py-16">
+      <div className="relative z-10 flex h-full flex-col justify-center px-4 py-6 md:px-12 md:py-12 lg:px-16 lg:py-16 overflow-y-auto">
         <div className="mx-auto w-full max-w-6xl">
           {/* Headline */}
           <h2
