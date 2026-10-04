@@ -14,33 +14,32 @@ export function MercedesUpgrade() {
         <div className="absolute inset-0 bg-black/70" />
       </div>
 
-      <div className="relative z-10 h-full flex flex-col justify-center px-4 py-6 md:px-12 lg:px-16 overflow-y-auto">
+      <div className="relative z-10 h-full flex flex-col justify-center px-3 py-4 md:px-12 lg:px-16 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl">
 
           {/* Header */}
-          <div className="mb-8">
-            <span className="text-xs uppercase tracking-[0.3em] text-red-500">
+          <div className="mb-3 md:mb-8">
+            <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-red-500">
               Technical
             </span>
-            <h2 className="text-xl md:text-2xl font-light text-foreground mt-1">
+            <h2 className="text-base md:text-xl lg:text-2xl font-light text-foreground mt-1">
               Mercedes Upgrade
             </h2>
           </div>
 
-          {/* Two-column grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+          {/* Two-column grid - 1 col on mobile, 2 on desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 md:gap-x-12 md:gap-y-8">
 
             {/* Left column: What Changed + Target */}
-            <div className="space-y-6">
+            <div className="space-y-3 md:space-y-6">
               {/* What Changed */}
               <div>
-                <div className="text-xs uppercase tracking-widest text-foreground/30 mb-2">
+                <div className="text-[10px] md:text-xs uppercase tracking-widest text-foreground/30 mb-1 md:mb-2">
                   What Changed
                 </div>
-                <div className="text-foreground/80 text-sm leading-relaxed space-y-2">
+                <div className="text-foreground/80 text-[10px] md:text-sm leading-snug md:leading-relaxed space-y-1 md:space-y-2">
                   <p>
                     Mercedes brought seven declared aerodynamic changes to the W17 at Sepang, concentrated around the floor and rear of the car: the floor board, leading edge, floor corner, floor body, rear suspension fairings, rear corner and rear bodywork.
-                    {' '}<a href="https://grandepremio.com/en/f1/mercedes-brings-seven-sepang-upgrades-as-seven-f1-teams-reveal-changes/" target="_blank" rel="noopener noreferrer" className="text-blue-400/70 hover:text-blue-400 transition-colors">[source]</a>
                   </p>
                   <p>
                     Rather than seven separate ideas, they work as one aerodynamic package — controlling airflow through the floor and toward the rear of the car.
@@ -49,19 +48,19 @@ export function MercedesUpgrade() {
               </div>
 
               {/* Arrow */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 md:gap-3">
                 <div className="h-px flex-1 bg-zinc-800" />
-                <span className="text-foreground/20">↓</span>
+                <span className="text-foreground/20 text-[10px] md:text-base">↓</span>
                 <div className="h-px flex-1 bg-zinc-800" />
               </div>
 
               {/* Target Behavior */}
               <div>
-                <div className="text-xs uppercase tracking-widest text-foreground/30 mb-2">
+                <div className="text-[10px] md:text-xs uppercase tracking-widest text-foreground/30 mb-1 md:mb-2">
                   Target Behavior
                 </div>
-                <div className="text-foreground/80 text-sm leading-relaxed space-y-2">
-                  <p className="text-base font-medium text-foreground">
+                <div className="text-foreground/80 text-[10px] md:text-sm leading-snug md:leading-relaxed space-y-1 md:space-y-2">
+                  <p className="text-[11px] md:text-base font-medium text-foreground">
                     More downforce. More often.
                   </p>
                   <p>
@@ -69,20 +68,19 @@ export function MercedesUpgrade() {
                   </p>
                   <p>
                     According to Antonelli, Mercedes estimates the complete package could be worth roughly 0.3 seconds per lap.
-                    {' '}<a href="https://www.grandprix.com/news/mercedes-says-sepang-upgrade-is-worth-three-tenths.html" target="_blank" rel="noopener noreferrer" className="text-blue-400/70 hover:text-blue-400 transition-colors">[source]</a>
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Right column: Why Sepang + Championship */}
-            <div className="space-y-6">
+            <div className="space-y-3 md:space-y-6">
               {/* Why Sepang */}
               <div>
-                <div className="text-xs uppercase tracking-widest text-foreground/30 mb-2">
+                <div className="text-[10px] md:text-xs uppercase tracking-widest text-foreground/30 mb-1 md:mb-2">
                   Why Sepang
                 </div>
-                <div className="text-foreground/80 text-sm leading-relaxed space-y-2">
+                <div className="text-foreground/80 text-[10px] md:text-sm leading-snug md:leading-relaxed space-y-1 md:space-y-2">
                   <p>
                     Sepang immediately stress-tests that idea.
                   </p>
@@ -91,27 +89,25 @@ export function MercedesUpgrade() {
                   </p>
                   <p>
                     Friday exposed exactly that problem: Russell said he could feel the additional downforce, but the tyre overheating was effectively masking its benefit. Mercedes said it had not yet seen the step in lap time it expected from the new package.
-                    {' '}<a href="https://www.formula1.com/en/latest/article/mercedes-suffer-one-of-the-toughest-fridays-of-the-season-but-russell-hopeful-of-fighting-for-pole.49cB5B7TCBoAI4ar4zOJlZ" target="_blank" rel="noopener noreferrer" className="text-foreground/40 hover:text-foreground/60 transition-colors text-xs">F1.com ↗</a>
                   </p>
                 </div>
               </div>
 
               {/* Arrow */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 md:gap-3">
                 <div className="h-px flex-1 bg-zinc-800" />
-                <span className="text-foreground/20">↓</span>
+                <span className="text-foreground/20 text-[10px] md:text-base">↓</span>
                 <div className="h-px flex-1 bg-zinc-800" />
               </div>
 
               {/* Championship Consequence */}
               <div>
-                <div className="text-xs uppercase tracking-widest text-foreground/30 mb-2">
+                <div className="text-[10px] md:text-xs uppercase tracking-widest text-foreground/30 mb-1 md:mb-2">
                   Championship Consequence
                 </div>
-                <div className="text-foreground/80 text-sm leading-relaxed space-y-2">
+                <div className="text-foreground/80 text-[10px] md:text-sm leading-snug md:leading-relaxed space-y-1 md:space-y-2">
                   <p>
                     Antonelli leads Russell by 66 points, but both now have the same upgraded W17 underneath them.
-                    {' '}<a href="https://www.formula1.com/en/latest/article/why-theres-still-hope-for-russell-as-he-tries-to-chase-down-team-mate-antonelli-in-the-title-race.61kGTLGO0gcOuFRzwdu3XZ" target="_blank" rel="noopener noreferrer" className="text-foreground/40 hover:text-foreground/60 transition-colors text-xs">F1.com ↗</a>
                   </p>
                   <p>
                     If Mercedes can unlock the package, the question becomes less about which driver has the better car and more about which driver extracts more from it over the remaining rounds.

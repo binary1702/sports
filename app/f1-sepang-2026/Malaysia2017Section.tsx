@@ -92,37 +92,37 @@ export function Malaysia2017Section() {
         <div className="absolute inset-0 bg-black/80" />
       </div>
 
-      <div className="relative z-10 h-full flex flex-col justify-center px-4 py-6 md:px-12 md:py-12 lg:px-16 lg:py-16 overflow-y-auto">
+      <div className="relative z-10 h-full flex flex-col justify-center px-3 py-4 md:px-12 md:py-12 lg:px-16 lg:py-16 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl">
 
           {/* Header */}
-          <div className="mb-6 md:mb-10">
-            <span className="text-xs uppercase tracking-[0.3em] text-red-500">
-              The last time F1 raced at Sepang was in 2017
+          <div className="mb-3 md:mb-10">
+            <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-red-500">
+              Last F1 race at Sepang: 2017
             </span>
-            <h2 className="text-2xl md:text-3xl font-light text-foreground mt-2">
+            <h2 className="text-lg md:text-3xl font-light text-foreground mt-1">
               Malaysia 2017
             </h2>
-            <p className="text-sm text-foreground/50 mt-2">
-              October 1, 2017 &middot; Sepang International Circuit &middot; 56 laps
+            <p className="text-[10px] md:text-sm text-foreground/50 mt-1">
+              Oct 1, 2017 · Sepang · 56 laps
             </p>
           </div>
 
-          {/* Two-column layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+          {/* Two-column layout - always 2 cols on mobile too */}
+          <div className="grid grid-cols-2 gap-3 md:gap-10">
 
             {/* Left: Key Moments + Podium + Fastest Lap */}
-            <div className="space-y-8">
+            <div className="space-y-3 md:space-y-8">
 
               {/* Key Moments */}
               <div>
-                <div className="text-xs uppercase tracking-widest text-foreground/30 mb-4">
+                <div className="text-[10px] md:text-xs uppercase tracking-widest text-foreground/30 mb-2 md:mb-4">
                   Key Moments
                 </div>
-                <div className="space-y-5">
+                <div className="space-y-2 md:space-y-5">
                   {KEY_MOMENTS.map((moment, idx) => (
-                    <div key={idx} className="flex gap-4">
-                      <div className="text-2xl font-light text-red-500/30">
+                    <div key={idx} className="flex gap-2 md:gap-4">
+                      <div className="text-base md:text-2xl font-light text-red-500/30">
                         {String(idx + 1).padStart(2, '0')}
                       </div>
                       <div>
@@ -130,11 +130,11 @@ export function Malaysia2017Section() {
                           href={getDriverUrl(moment.driverId)}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm font-medium text-foreground hover:text-red-400 transition-colors"
+                          className="text-[11px] md:text-sm font-medium text-foreground hover:text-red-400 transition-colors"
                         >
                           {moment.driver}
                         </a>
-                        <p className="text-sm text-foreground/60 leading-relaxed mt-0.5">
+                        <p className="text-[10px] md:text-sm text-foreground/60 leading-snug mt-0.5">
                           {moment.detail}
                         </p>
                       </div>
@@ -145,103 +145,103 @@ export function Malaysia2017Section() {
 
               {/* Podium */}
               <div>
-                <div className="text-xs uppercase tracking-widest text-foreground/30 mb-3">
+                <div className="text-[10px] md:text-xs uppercase tracking-widest text-foreground/30 mb-2 md:mb-3">
                   Podium
                 </div>
-                <div className="flex items-end gap-2">
+                <div className="flex items-end gap-1 md:gap-2">
                   {/* P2 */}
                   <div className="flex-1 text-center">
-                    <div className="bg-zinc-800/50 border border-zinc-700 pt-4 pb-2 px-2">
-                      <div className="text-xs text-foreground/40 mb-1">2</div>
+                    <div className="bg-zinc-800/50 border border-zinc-700 pt-2 md:pt-4 pb-1 md:pb-2 px-1 md:px-2">
+                      <div className="text-[10px] md:text-xs text-foreground/40 mb-0.5">2</div>
                       <a
                         href={getDriverUrl(podium[1].Driver.driverId)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-medium text-foreground hover:text-red-400 transition-colors"
+                        className="text-[10px] md:text-sm font-medium text-foreground hover:text-red-400 transition-colors"
                       >
                         {podium[1].Driver.familyName}
                       </a>
-                      <div className="text-xs text-foreground/40 mt-0.5">{podium[1].Time?.time}</div>
+                      <div className="text-[9px] md:text-xs text-foreground/40 mt-0.5">{podium[1].Time?.time}</div>
                     </div>
                   </div>
                   {/* P1 */}
                   <div className="flex-1 text-center">
-                    <div className="bg-zinc-800/50 border border-red-500/30 pt-6 pb-2 px-2">
-                      <div className="text-xs text-red-500 mb-1">1</div>
+                    <div className="bg-zinc-800/50 border border-red-500/30 pt-3 md:pt-6 pb-1 md:pb-2 px-1 md:px-2">
+                      <div className="text-[10px] md:text-xs text-red-500 mb-0.5">1</div>
                       <a
                         href={getDriverUrl(podium[0].Driver.driverId)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-medium text-foreground hover:text-red-400 transition-colors"
+                        className="text-[10px] md:text-sm font-medium text-foreground hover:text-red-400 transition-colors"
                       >
                         {podium[0].Driver.familyName}
                       </a>
-                      <div className="text-xs text-foreground/40 mt-0.5">{podium[0].Time?.time}</div>
+                      <div className="text-[9px] md:text-xs text-foreground/40 mt-0.5">{podium[0].Time?.time}</div>
                     </div>
                   </div>
                   {/* P3 */}
                   <div className="flex-1 text-center">
-                    <div className="bg-zinc-800/50 border border-zinc-700 pt-3 pb-2 px-2">
-                      <div className="text-xs text-foreground/40 mb-1">3</div>
+                    <div className="bg-zinc-800/50 border border-zinc-700 pt-1.5 md:pt-3 pb-1 md:pb-2 px-1 md:px-2">
+                      <div className="text-[10px] md:text-xs text-foreground/40 mb-0.5">3</div>
                       <a
                         href={getDriverUrl(podium[2].Driver.driverId)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-medium text-foreground hover:text-red-400 transition-colors"
+                        className="text-[10px] md:text-sm font-medium text-foreground hover:text-red-400 transition-colors"
                       >
                         {podium[2].Driver.familyName}
                       </a>
-                      <div className="text-xs text-foreground/40 mt-0.5">{podium[2].Time?.time}</div>
+                      <div className="text-[9px] md:text-xs text-foreground/40 mt-0.5">{podium[2].Time?.time}</div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Fastest Lap */}
-              <div className="pt-4 border-t border-zinc-800">
-                <div className="text-xs text-foreground/30 uppercase tracking-wider mb-1">
+              <div className="pt-2 md:pt-4 border-t border-zinc-800">
+                <div className="text-[10px] md:text-xs text-foreground/30 uppercase tracking-wider mb-0.5">
                   Fastest Lap
                 </div>
-                <div className="flex items-baseline gap-2">
+                <div className="flex items-baseline gap-1 md:gap-2">
                   <a
                     href={getDriverUrl('vettel')}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-foreground font-medium hover:text-red-400 transition-colors"
+                    className="text-[11px] md:text-base text-foreground font-medium hover:text-red-400 transition-colors"
                   >
                     Vettel
                   </a>
-                  <span className="text-red-500 tabular-nums">1:34.080</span>
-                  <span className="text-foreground/40 text-xs">Lap 41</span>
+                  <span className="text-[11px] md:text-base text-red-500 tabular-nums">1:34.080</span>
+                  <span className="text-foreground/40 text-[9px] md:text-xs">Lap 41</span>
                 </div>
               </div>
             </div>
 
             {/* Right: Who Remembers Sepang */}
             <div>
-              <div className="text-xs uppercase tracking-widest text-foreground/30 mb-4">
-                Who Remembers Sepang?
+              <div className="text-[10px] md:text-xs uppercase tracking-widest text-foreground/30 mb-2 md:mb-4">
+                Sepang Experience
               </div>
-              <p className="text-sm text-foreground/50 mb-5">
-                10 drivers have started an F1 race here. 12 have not.
+              <p className="text-[10px] md:text-sm text-foreground/50 mb-2 md:mb-5">
+                10 drivers raced here. 12 have not.
               </p>
 
               {/* Bar chart */}
-              <div className="space-y-2">
+              <div className="space-y-1 md:space-y-2">
                 {SEPANG_EXPERIENCE.map((driver) => (
-                  <div key={driver.driverId} className="flex items-center gap-3">
+                  <div key={driver.driverId} className="flex items-center gap-1.5 md:gap-3">
                     {/* Name */}
                     <a
                       href={getDriverUrl(driver.driverId)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-24 text-sm text-foreground hover:text-red-400 transition-colors truncate"
+                      className="w-16 md:w-24 text-[10px] md:text-sm text-foreground hover:text-red-400 transition-colors truncate"
                     >
                       {driver.name}
                     </a>
 
                     {/* Bar */}
-                    <div className="flex-1 h-4 bg-zinc-900 relative">
+                    <div className="flex-1 h-3 md:h-4 bg-zinc-900 relative">
                       <div
                         className="h-full"
                         style={{
@@ -253,28 +253,28 @@ export function Malaysia2017Section() {
                     </div>
 
                     {/* Count */}
-                    <div className="w-6 text-sm tabular-nums text-foreground/60 text-right">
+                    <div className="w-4 md:w-6 text-[10px] md:text-sm tabular-nums text-foreground/60 text-right">
                       {driver.starts}
                     </div>
                   </div>
                 ))}
 
                 {/* 12 other drivers */}
-                <div className="flex items-center gap-3 pt-2 border-t border-zinc-800 mt-3">
-                  <div className="w-24 text-sm text-foreground/40">
+                <div className="flex items-center gap-1.5 md:gap-3 pt-1 md:pt-2 border-t border-zinc-800 mt-1.5 md:mt-3">
+                  <div className="w-16 md:w-24 text-[10px] md:text-sm text-foreground/40">
                     12 others
                   </div>
-                  <div className="flex-1 h-4 bg-zinc-900 relative">
+                  <div className="flex-1 h-3 md:h-4 bg-zinc-900 relative">
                     {/* empty bar */}
                   </div>
-                  <div className="w-6 text-sm tabular-nums text-foreground/30 text-right">
+                  <div className="w-4 md:w-6 text-[10px] md:text-sm tabular-nums text-foreground/30 text-right">
                     0
                   </div>
                 </div>
               </div>
 
-              {/* Notable callouts */}
-              <div className="mt-6 space-y-2 text-xs text-foreground/50">
+              {/* Notable callouts - hidden on mobile */}
+              <div className="hidden md:block mt-6 space-y-2 text-xs text-foreground/50">
                 <p><span className="text-foreground/70">Alonso</span> has raced here more than some drivers have completed full seasons.</p>
                 <p><span className="text-foreground/70">Gasly's</span> only previous Sepang start was his F1 debut.</p>
               </div>

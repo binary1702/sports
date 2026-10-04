@@ -15,9 +15,18 @@ const SECTIONS = [
   { name: '08-attribution', selector: 'footer' },
 ];
 
+// Instagram: Use mobile viewport width to trigger mobile CSS (video zoom),
+// then use deviceScaleFactor to render at 1080x1920 output resolution
+// 1080/1920 = 9/16, so viewport needs same ratio: 390 x 693.33 ≈ 390 x 693
 const FORMATS = {
-  instagram: { width: 1080, height: 1920 },
-  linkedin: { width: 1200, height: 628 },
+  instagram: {
+    viewport: { width: 390, height: 693 },  // Mobile viewport (9:16 ratio) triggers mobile CSS
+    deviceScaleFactor: 1080 / 390,          // ~2.77x scale to get 1080x1920 output
+  },
+  linkedin: {
+    viewport: { width: 1200, height: 628 },
+    deviceScaleFactor: 1,
+  },
 };
 
 const BASE_URL = 'http://localhost:3000/f1-sepang-2026';
@@ -39,31 +48,26 @@ async function captureScreenshots() {
 
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--autoplay-policy=no-user-gesture-required'],
   });
 
-  for (const [formatName, dimensions] of Object.entries(FORMATS)) {
-    console.log(`📐 Capturing ${formatName} format (${dimensions.width}x${dimensions.height})...\n`);
+  for (const [formatName, format] of Object.entries(FORMATS)) {
+    const outputWidth = Math.round(format.viewport.width * format.deviceScaleFactor);
+    const outputHeight = Math.round(format.viewport.height * format.deviceScaleFactor);
+    console.log(`📐 Capturing ${formatName} format (${outputWidth}x${outputHeight})...\n`);
 
     const page = await browser.newPage();
-    await page.setViewport(dimensions);
+    await page.setViewport({
+      width: format.viewport.width,
+      height: format.viewport.height,
+      deviceScaleFactor: format.deviceScaleFactor,
+    });
 
     // Navigate and wait for content
     await page.goto(BASE_URL, { waitUntil: 'networkidle0', timeout: 60000 });
 
-    // Wait for animations to settle (5 seconds for video/animations to load)
-    await sleep(5000);
-
-    // Hide YouTube iframes to avoid blank frames
-    await page.evaluate(() => {
-      document.querySelectorAll('iframe').forEach(iframe => {
-        const parent = iframe.parentElement;
-        if (parent) {
-          parent.style.background = '#000';
-        }
-        iframe.style.opacity = '0';
-      });
-    });
+    console.log('  ⏳ Waiting 10s for YouTube videos to load...');
+    await sleep(10000);
 
     for (const section of SECTIONS) {
       try {
@@ -75,8 +79,8 @@ async function captureScreenshots() {
           }
         }, section.selector);
 
-        // Wait for scroll to complete
-        await sleep(500);
+        // Wait for section to render and video frame to appear
+        await sleep(2000);
 
         // Take full viewport screenshot
         const outputPath = path.join(OUTPUT_DIR, formatName, `${section.name}.png`);

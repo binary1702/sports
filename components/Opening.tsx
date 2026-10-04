@@ -60,9 +60,11 @@ export function Opening({
     { scope: containerRef }
   );
 
+  // Desktop: split into two columns
   const midpoint = Math.ceil(body.length / 2);
   const leftColumn = body.slice(0, midpoint);
   const rightColumn = body.slice(midpoint);
+
 
   return (
     <section
@@ -82,23 +84,30 @@ export function Opening({
         </div>
       )}
 
-      <div className="relative z-10 flex h-full flex-col justify-center px-4 py-6 md:px-12 md:py-12 lg:px-16 lg:py-16 overflow-y-auto">
+      <div className="relative z-10 flex h-full flex-col justify-center px-3 py-4 md:px-12 md:py-12 lg:px-16 lg:py-16">
         <div className="mx-auto w-full max-w-6xl">
           {/* Headline */}
           <h2
-            className={`text-base font-medium uppercase tracking-wide ${accentColor} mb-6 md:mb-8 md:text-lg`}
+            className={`text-[11px] md:text-base lg:text-lg font-medium uppercase tracking-wide ${accentColor} mb-3 md:mb-8`}
           >
             {headline}
           </h2>
 
-          {/* Body paragraphs - two columns */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
-            <div className="space-y-4 text-sm font-light leading-relaxed text-foreground/80 md:text-base">
+          {/* Mobile: single column, all paragraphs */}
+          <div className="space-y-2 text-[10px] font-light leading-snug text-foreground/80 md:hidden">
+            {body.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
+            ))}
+          </div>
+
+          {/* Desktop: two columns, all paragraphs */}
+          <div className="hidden md:grid grid-cols-2 gap-x-12 gap-y-4">
+            <div className="space-y-4 text-sm lg:text-base font-light leading-relaxed text-foreground/80">
               {leftColumn.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
               ))}
             </div>
-            <div className="space-y-4 text-sm font-light leading-relaxed text-foreground/80 md:text-base">
+            <div className="space-y-4 text-sm lg:text-base font-light leading-relaxed text-foreground/80">
               {rightColumn.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
               ))}
@@ -106,15 +115,15 @@ export function Opening({
           </div>
 
           {/* Closing statement */}
-          <div className="opening-closing mt-8 border-t border-zinc-800 pt-8 md:mt-10 md:pt-10">
+          <div className="opening-closing mt-4 border-t border-zinc-800 pt-4 md:mt-10 md:pt-10">
             <p
-              className={`opening-closing-line text-lg font-medium ${accentColor} md:text-xl lg:text-2xl`}
+              className={`opening-closing-line text-sm md:text-xl lg:text-2xl font-medium ${accentColor}`}
             >
               {closing.line1}
             </p>
             {closing.line2 && (
               <p
-                className={`opening-closing-line text-xl font-medium ${accentColor} md:text-2xl lg:text-3xl`}
+                className={`opening-closing-line text-base md:text-2xl lg:text-3xl font-medium ${accentColor}`}
               >
                 {closing.line2}
               </p>
